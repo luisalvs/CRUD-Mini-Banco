@@ -18,11 +18,11 @@ def depositar():
 
 
 def sacar():
-    conta = int(input('Numero:'))
+    conta = int(input('Numero: '))
     for contas in db.get_contas():
         if conta == contas[0]:
             saque = float(input('Valor: '))
-            if saque in contas[2]:
+            if saque <= contas[2]:
                 saldo = contas[2] - saque
                 db.atualizar_saldo(contas[0], saldo)
 
@@ -32,14 +32,21 @@ def transferir():
     for contas in db.get_contas():
         if conta1 == contas[0]:
             saque = float(input('Valor: '))
-            if saque in contas[2]:
+            if saque <= contas[2]:
                 saldo = contas[2] - saque
                 db.atualizar_saldo(contas[0], saldo)
+
+
+    conta2 = int(input('Numero: '))
+    for contas in db.get_contas():
+        if conta2 == contas[0]:
+            adicionar = float(input('Valor: '))
+            saldo = contas[2] + adicionar
+            db.atualizar_saldo(contas[0], saldo)
 
 
 def exibir_contas():
     for conta in db.get_contas():
         print(f'\nConta: {conta[0]} \nTitular: {conta[1]} \nSaldo: {conta[2]}')
-
 
 exibir_contas()
